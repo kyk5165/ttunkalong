@@ -1,0 +1,16 @@
+.notice_form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  padding: 10px;
+  margin: 10px;
+  margin-bottom: 0px;
+}
+
+.notice_title {
+  margin-bottom: 10px;
+}
+
+.notice_contents {
+  margin-bottom: 10px;
+}
