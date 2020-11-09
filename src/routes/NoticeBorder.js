@@ -27,6 +27,7 @@ const NoticeBorder = ({ userObj, authority }) => {
     await dbService.collection("notices").add({
       createdAt: Date.now(),
       creatorId: userObj.uid,
+      creatorDisplayName: userObj.displayName,
       noticeTitle,
       noticeContents,
     });
@@ -50,7 +51,7 @@ const NoticeBorder = ({ userObj, authority }) => {
   return (
     <>
       <h1 className="title">공지사항</h1>
-      {authority === "admin" && (
+      {(authority === "master" || authority === "submaster") && (
         <>
           <span onClick={toggleNoticeWrite}>글쓰기</span>
           {newNotice ? (
@@ -60,7 +61,7 @@ const NoticeBorder = ({ userObj, authority }) => {
               autoComplete="off"
             >
               <input
-                className="notice_title"
+                className="notice_form_title"
                 name="notice_title"
                 type="text"
                 placeholder="제목"
@@ -70,7 +71,7 @@ const NoticeBorder = ({ userObj, authority }) => {
                 required
               />
               <textarea
-                className="notice_contents"
+                className="notice_form_contents"
                 name="notice_contents"
                 cols="40"
                 rows="8"
@@ -87,17 +88,14 @@ const NoticeBorder = ({ userObj, authority }) => {
           )}
         </>
       )}
-
-      <div>
-        {notices.map((notice) => (
-          <Notice
-            key={notice.id}
-            noticeObj={notice}
-            authority={authority}
-            isOwner={notice.creatorId === userObj.uid}
-          />
-        ))}
-      </div>
+      {notices.map((notice) => (
+        <Notice
+          key={notice.id}
+          noticeObj={notice}
+          authority={authority}
+          isOwner={notice.creatorId === userObj.uid || authority === "master"}
+        />
+      ))}
     </>
   );
 };

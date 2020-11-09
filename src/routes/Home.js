@@ -1,6 +1,4 @@
 import React from "react";
-import Flag from "routes/Flag";
-import NoticeBorder from "routes/NoticeBorder";
 import Suro from "./Suro";
 
 const Home = () => {

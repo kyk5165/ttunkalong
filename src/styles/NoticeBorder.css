@@ -1,3 +1,7 @@
+textarea {
+  width: 100%;
+}
+
 .notice_form {
   display: flex;
   flex-direction: column;
@@ -5,12 +9,13 @@
   padding: 10px;
   margin: 10px;
   margin-bottom: 0px;
+  width: 80%;
 }
 
-.notice_title {
+.notice_form_title {
   margin-bottom: 10px;
 }
 
-.notice_contents {
+.notice_form_contents {
   margin-bottom: 10px;
 }

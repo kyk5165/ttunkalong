@@ -1,32 +1,64 @@
 import React, { useEffect, useState } from "react";
 import AppRouter from "components/Routes";
-import { authService } from "services/fbase";
+import { authService, dbService } from "services/fbase";
 
 function App() {
   const [init, setInit] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(authService.currentUser);
   const [userObj, setUserObj] = useState(null);
+  const [authority, setAuthority] = useState("user");
+
+  const getRoles = async (uid) => {
+    const roles = await (await dbService.collection("role").get()).docs.map(
+      (doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })
+    );
+    const {
+      0: { master, submaster, outsider, user },
+    } = roles;
+
+    if (user.includes(uid)) {
+      setAuthority("user");
+    } else if (submaster.includes(uid)) {
+      setAuthority("submaster");
+    } else if (master.includes(uid)) {
+      setAuthority("master");
+    }
+  };
 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
-        setIsLoggedIn(true);
-        setUserObj(user);
+        setUserObj({
+          displayName: user.displayName,
+          uid: user.uid,
+          updateProfile: (args) => user.updateProfile(args),
+        });
+        getRoles(user.uid);
       } else {
-        setIsLoggedIn(false);
         setUserObj(null);
       }
       setInit(true);
     });
   }, []);
 
+  const refreshUser = () => {
+    const user = authService.currentUser;
+    setUserObj({
+      displayName: user.displayName,
+      uid: user.uid,
+      updateProfile: (args) => user.updateProfile(args),
+    });
+  };
+
   return (
     <>
       {init ? (
         <AppRouter
-          isLoggedIn={isLoggedIn}
+          refreshUser={refreshUser}
           userObj={userObj}
-          authority={"admin"}
+          authority={authority}
         />
       ) : (
         "Loding..."

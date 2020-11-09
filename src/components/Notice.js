@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { dbService } from "services/fbase";
+import "styles/Notice.css";
 
 const Notice = ({ noticeObj, authority, isOwner }) => {
   const [editing, setEditing] = useState(false);
   const [newNoticeTitle, setNewNoticeTitle] = useState("");
   const [newNoticeContents, setNewNoticeContents] = useState("");
+  const [contentView, setContentView] = useState(false);
 
   const toggleEditing = () => {
     setEditing((prev) => !prev);
@@ -16,6 +18,9 @@ const Notice = ({ noticeObj, authority, isOwner }) => {
     if (ok) {
       await dbService.doc(`notices/${noticeObj.id}`).delete();
     }
+  };
+  const onToggleTitleClick = () => {
+    setContentView((prev) => !prev);
   };
   const onChange = (event) => {
     const {
@@ -42,7 +47,7 @@ const Notice = ({ noticeObj, authority, isOwner }) => {
         <>
           <form className="notice_form" onSubmit={onSubmit} autoComplete="off">
             <input
-              className="notice_title"
+              className="notice_form_title"
               name="notice_title"
               type="text"
               placeholder="제목"
@@ -52,7 +57,7 @@ const Notice = ({ noticeObj, authority, isOwner }) => {
               required
             />
             <textarea
-              className="notice_contents"
+              className="notice_form_contents"
               name="notice_contents"
               cols="40"
               rows="8"
@@ -67,15 +72,27 @@ const Notice = ({ noticeObj, authority, isOwner }) => {
           </form>
         </>
       ) : (
-        <>
-          <h4>{noticeObj.noticeTitle}</h4>
-          {isOwner && (
-            <>
-              <span onClick={toggleEditing}>[edit]</span>
-              <span onClick={onDeleteClick}>[del]</span>
-            </>
-          )}
-        </>
+        <div className="notice">
+          <div className="notice_header">
+            <div className="notice_title_and_button">
+              <h4 className="notice_title" onClick={onToggleTitleClick}>
+                {noticeObj.noticeTitle}
+              </h4>
+              <div>
+                {isOwner && (
+                  <>
+                    <span onClick={toggleEditing}>[edit]</span>
+                    <span onClick={onDeleteClick}>[del]</span>
+                  </>
+                )}
+              </div>
+            </div>
+            <h4>{noticeObj.creatorDisplayName}</h4>
+          </div>
+          <div className="notice_contents">
+            {contentView && <pre>{noticeObj.noticeContents}</pre>}
+          </div>
+        </div>
       )}
     </>
   );

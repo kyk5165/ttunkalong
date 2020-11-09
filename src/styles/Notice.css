@@ -1,0 +1,27 @@
+.notice {
+  border: 1px solid black;
+  margin: 5px;
+  width: 80%;
+  padding: 3px;
+}
+
+.notice_header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  height: 24px;
+  padding: 3px;
+}
+
+.notice_title_and_button {
+  display: flex;
+}
+
+.notice_title {
+}
+
+.notice_contents {
+  border-top: 1px solid black;
+  padding: 3px;
+}
