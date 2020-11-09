@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/ttunkalong/static/css/main.3a2fbc43.chunk.css",
-    "main.js": "/ttunkalong/static/js/main.4c82a7c0.chunk.js",
-    "main.js.map": "/ttunkalong/static/js/main.4c82a7c0.chunk.js.map",
+    "main.css": "/ttunkalong/static/css/main.df9ee30e.chunk.css",
+    "main.js": "/ttunkalong/static/js/main.e7ff53fe.chunk.js",
+    "main.js.map": "/ttunkalong/static/js/main.e7ff53fe.chunk.js.map",
     "runtime-main.js": "/ttunkalong/static/js/runtime-main.076cbeba.js",
     "runtime-main.js.map": "/ttunkalong/static/js/runtime-main.076cbeba.js.map",
     "static/js/2.fe1aa8be.chunk.js": "/ttunkalong/static/js/2.fe1aa8be.chunk.js",
     "static/js/2.fe1aa8be.chunk.js.map": "/ttunkalong/static/js/2.fe1aa8be.chunk.js.map",
     "index.html": "/ttunkalong/index.html",
-    "static/css/main.3a2fbc43.chunk.css.map": "/ttunkalong/static/css/main.3a2fbc43.chunk.css.map",
+    "static/css/main.df9ee30e.chunk.css.map": "/ttunkalong/static/css/main.df9ee30e.chunk.css.map",
     "static/js/2.fe1aa8be.chunk.js.LICENSE.txt": "/ttunkalong/static/js/2.fe1aa8be.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.076cbeba.js",
     "static/js/2.fe1aa8be.chunk.js",
-    "static/css/main.3a2fbc43.chunk.css",
-    "static/js/main.4c82a7c0.chunk.js"
+    "static/css/main.df9ee30e.chunk.css",
+    "static/js/main.e7ff53fe.chunk.js"
   ]
 }
