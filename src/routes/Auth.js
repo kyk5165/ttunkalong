@@ -1,4 +1,4 @@
-import { authService, firebaseInstance } from "services/fbase";
+import { authService, dbService, firebaseInstance } from "services/fbase";
 import React, { useState } from "react";
 import "styles/Auth.css";
 
@@ -18,16 +18,35 @@ const Auth = () => {
       setPassword(value);
     }
   };
+  const logindbAdd = async (user) => {
+    await dbService.collection("userList").doc(`${user.uid}`).set({
+      createdAt: Date.now(),
+      email: user.email,
+      displayName: user.displayName,
+    });
+  };
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
       if (newAccount) {
-        await authService.createUserWithEmailAndPassword(email, password);
+        await authService
+          .createUserWithEmailAndPassword(email, password)
+          .then((snapshot) => logindbAdd(snapshot.user));
       } else {
         await authService.signInWithEmailAndPassword(email, password);
       }
     } catch (error) {
-      setError(error.message);
+      if (error.code === "auth/wrong-password") {
+        setError("비밀번호가 틀렸습니다.");
+      } else if (error.code === "auth/user-not-found") {
+        setError("아이디를 찾을 수 없습니다.");
+      } else if (error.code === "auth/email-already-in-use") {
+        setError("이미 존재하는 아이디입니다.");
+      } else if (error.code === "auth/weak-password") {
+        setError("비밀번호는 6글자 이상으로 해주세요.");
+      } else {
+        setError(error.message);
+      }
     }
   };
   const toggleAccount = () => setNewAccount((prev) => !prev);
@@ -39,7 +58,11 @@ const Auth = () => {
     if (name === "google") {
       provider = new firebaseInstance.auth.GoogleAuthProvider();
     }
-    await authService.signInWithPopup(provider);
+    await authService.signInWithPopup(provider).then((snapshot) => {
+      if (snapshot.additionalUserInfo.isNewUser) {
+        logindbAdd(snapshot.user);
+      }
+    });
   };
 
   return (
@@ -69,8 +92,8 @@ const Auth = () => {
             value={newAccount ? "Sing up" : "Log In"}
             className="login_submit"
           />
-          {error}
         </form>
+        {error && <div className="login_error">{error}</div>}
         <span onClick={toggleAccount} className="changeAccount">
           {newAccount ? "Log In" : "Create Account"}
         </span>

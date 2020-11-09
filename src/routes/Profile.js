@@ -1,4 +1,4 @@
-import { authService } from "services/fbase";
+import { authService, dbService } from "services/fbase";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -20,6 +20,9 @@ const Profile = ({ refreshUser, userObj }) => {
     event.preventDefault();
     if (userObj.displayName !== newDisplayName) {
       await userObj.updateProfile({
+        displayName: newDisplayName,
+      });
+      await dbService.doc(`userList/${userObj.uid}`).update({
         displayName: newDisplayName,
       });
       refreshUser();

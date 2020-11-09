@@ -51,7 +51,7 @@ const Notice = ({ noticeObj, authority, isOwner }) => {
               name="notice_title"
               type="text"
               placeholder="제목"
-              maxLength={60}
+              maxLength={14}
               value={newNoticeTitle}
               onChange={onChange}
               required

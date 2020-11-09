@@ -5,20 +5,20 @@ const Navigation = ({ userObj, authority }) => (
   <nav>
     <ul>
       <li>
-        <Link to="/">Home</Link>
+        <Link to="/">메인</Link>
       </li>
       <li>
         <Link to="/profile">{userObj.displayName}의 프로필</Link>
       </li>
       <li>
-        <Link to="/notice">Notice</Link>
+        <Link to="/notice">공지사항</Link>
       </li>
       <li>
-        <Link to="/flag">Flag</Link>
+        <Link to="/flag">플래그</Link>
       </li>
       {(authority === "master" || authority === "submaster") && (
         <li>
-          <Link to="/flagSearch">FlagSearch</Link>
+          <Link to="/flagSearch">플래그 조회</Link>
         </li>
       )}
     </ul>

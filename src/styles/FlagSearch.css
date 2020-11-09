@@ -1,4 +1,24 @@
 .flagSearch {
-  background: purple;
+  background: lightblue;
   width: 100%;
+  min-height: 200px;
+}
+.fs_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 3px;
+  padding-right: 3px;
+  margin-bottom: 5px;
+}
+.search_box {
+  width: 100px;
+}
+.userList {
+  border: 1px solid black;
+  margin: 3px;
+  padding: 3px;
+}
+.selectedUser {
+  text-align: center;
 }

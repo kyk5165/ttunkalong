@@ -26,7 +26,6 @@ function App() {
       setAuthority("master");
     }
   };
-
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {

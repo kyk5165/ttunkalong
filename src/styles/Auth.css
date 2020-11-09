@@ -40,6 +40,12 @@
   border: 1px solid black;
   margin-left: 5px;
 }
+.login_error {
+  color: red;
+  border: 1px solid black;
+  margin-bottom: 5px;
+  padding: 3px;
+}
 .changeAccount {
   border: 1px solid black;
   margin-bottom: 5px;
