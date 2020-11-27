@@ -1,0 +1,16 @@
+.flag_box {
+  display: flex;
+  align-items: center;
+}
+
+.fb_time {
+}
+
+.fb_name {
+  width: 100px;
+  text-align: center;
+}
+
+.fb_btn {
+  padding-left: 30px;
+}

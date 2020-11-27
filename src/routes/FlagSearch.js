@@ -100,9 +100,15 @@ const FlagSearch = ({ userObj, authority }) => {
   return (
     <div className="flagSearch">
       <div className="fs_header">
-        <div onClick={onSearchMenuClick}>전체보기</div>
-        <div onClick={onSearchMenuClick}>유저별</div>
-        <div onClick={onSearchMenuClick}>시간별</div>
+        <div onClick={onSearchMenuClick} className="fs_menu">
+          전체보기
+        </div>
+        <div onClick={onSearchMenuClick} className="fs_menu">
+          유저별
+        </div>
+        <div onClick={onSearchMenuClick} className="fs_menu">
+          시간별
+        </div>
         <form>
           <input type="text" required className="search_box" />
           <input type="submit" value="검색" className="search_btn" />

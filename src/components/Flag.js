@@ -1,5 +1,6 @@
 import React from "react";
 import { dbService, storageService } from "services/fbase";
+import "styles/Flag.css";
 
 const Flag = ({ flagObj, isOwner }) => {
   const onDeleteClick = async () => {
@@ -10,8 +11,9 @@ const Flag = ({ flagObj, isOwner }) => {
     }
   };
   return (
-    <>
-      <div>{flagObj.flagTime}</div>
+    <div className="flag_box">
+      <div className="fb_time">{flagObj.flagTime}</div>
+      <div className="fb_name">{flagObj.creatorDisplayName}</div>
       <img
         src={flagObj.attachmentUrl}
         width="200px"
@@ -19,11 +21,11 @@ const Flag = ({ flagObj, isOwner }) => {
         alt="flag"
       />
       {isOwner && (
-        <div>
+        <div className="fb_btn">
           <span onClick={onDeleteClick}>[del]</span>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
