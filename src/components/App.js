@@ -24,6 +24,10 @@ function App() {
       setAuthority("submaster");
     } else if (master.includes(uid)) {
       setAuthority("master");
+    } else if (outsider.includes(uid)) {
+      setAuthority("outsider");
+    } else {
+      setAuthority("noting");
     }
   };
   useEffect(() => {

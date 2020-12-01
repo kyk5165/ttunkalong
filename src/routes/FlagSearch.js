@@ -17,7 +17,7 @@ const FlagSearch = ({ userObj, authority }) => {
     if (authority !== "master" && authority !== "submaster") {
       history.push("/");
     }
-  }, [authority]);
+  }, [authority, history]);
 
   const onSearchMenuClick = (event) => {
     const {
@@ -115,7 +115,6 @@ const FlagSearch = ({ userObj, authority }) => {
   const getTimeList = () => {
     setFlags([]);
     const today = new Date();
-    const hours = today.getHours();
     const month = today.getMonth() + 1;
     const day = today.getDate();
     let flagFormmat = month + "월" + day + "일";
@@ -179,16 +178,12 @@ const FlagSearch = ({ userObj, authority }) => {
         ))}
         {selectedUser && <div className="selectedUser">{selectedUser}</div>}
         {flags.map((flag) => (
-          <>
+          <div key={flag.id}>
             {getMonthDay(flag) && (
               <div className="flag_month_day">{lastMonthDay}</div>
             )}
-            <Flag
-              key={flag.id}
-              flagObj={flag}
-              isOwner={flag.creatorId === userObj.uid}
-            />
-          </>
+            <Flag flagObj={flag} isOwner={flag.creatorId === userObj.uid} />
+          </div>
         ))}
       </div>
     </div>

@@ -128,16 +128,12 @@ const FlagBorder = ({ userObj }) => {
       <h4>{state}</h4>
       <div>
         {flags.map((flag) => (
-          <>
+          <div key={flag.id}>
             {getMonthDay(flag) && (
               <div className="flag_month_day">{lastMonthDay}</div>
             )}
-            <Flag
-              key={flag.id}
-              flagObj={flag}
-              isOwner={flag.creatorId === userObj.uid}
-            />
-          </>
+            <Flag flagObj={flag} isOwner={flag.creatorId === userObj.uid} />
+          </div>
         ))}
       </div>
     </>
