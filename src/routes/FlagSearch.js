@@ -10,6 +10,7 @@ const FlagSearch = ({ userObj, authority }) => {
   const [flags, setFlags] = useState([]);
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
+  const [searchText, setSearchText] = useState("");
 
   const checkAuthority = useCallback(() => {
     if (authority !== "master" && authority !== "submaster") {
@@ -26,6 +27,26 @@ const FlagSearch = ({ userObj, authority }) => {
     } else if (innerHTML === "유저별") {
       setSearchType("user");
     }
+  };
+
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSearchText(value);
+  };
+
+  const onSubmit = async (event) => {
+    setFlags([]);
+    setSelectedUser("");
+    setUsers([]);
+    event.preventDefault();
+    const test = {
+      target: {
+        innerHTML: searchText,
+      },
+    };
+    onSelectUser(test);
   };
 
   const searchAll = () => {
@@ -46,8 +67,10 @@ const FlagSearch = ({ userObj, authority }) => {
         setFlags(flagArray);
       });
   };
+
   const getUserList = () => {
     setFlags([]);
+    setSelectedUser("");
     dbService
       .collection("userList")
       .orderBy("displayName", "asc")
@@ -63,6 +86,7 @@ const FlagSearch = ({ userObj, authority }) => {
         setUsers(userArray);
       });
   };
+
   const onSelectUser = (event) => {
     const {
       target: { innerHTML },
@@ -109,8 +133,14 @@ const FlagSearch = ({ userObj, authority }) => {
         <div onClick={onSearchMenuClick} className="fs_menu">
           시간별
         </div>
-        <form>
-          <input type="text" required className="search_box" />
+        <form onSubmit={onSubmit}>
+          <input
+            type="text"
+            required
+            className="search_box"
+            onChange={onChange}
+            value={searchText}
+          />
           <input type="submit" value="검색" className="search_btn" />
         </form>
       </div>
