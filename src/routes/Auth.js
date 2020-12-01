@@ -24,6 +24,13 @@ const Auth = () => {
       email: user.email,
       displayName: user.displayName,
     });
+
+    dbService
+      .collection("role")
+      .doc("1vDX1PIOKVkV1EDrqbER")
+      .update({
+        outsider: firebaseInstance.firestore.FieldValue.arrayUnion(user.uid),
+      });
   };
   const onSubmit = async (event) => {
     event.preventDefault();

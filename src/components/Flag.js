@@ -10,6 +10,7 @@ const Flag = ({ flagObj, isOwner }) => {
       await storageService.refFromURL(flagObj.attachmentUrl).delete();
     }
   };
+
   return (
     <div className="flag_box">
       <div className="fb_time">{flagObj.flagTime}</div>

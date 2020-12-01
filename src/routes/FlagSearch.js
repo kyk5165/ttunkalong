@@ -11,6 +11,7 @@ const FlagSearch = ({ userObj, authority }) => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
   const [searchText, setSearchText] = useState("");
+  let lastMonthDay = "";
 
   const checkAuthority = useCallback(() => {
     if (authority !== "master" && authority !== "submaster") {
@@ -26,6 +27,8 @@ const FlagSearch = ({ userObj, authority }) => {
       setSearchType("all");
     } else if (innerHTML === "유저별") {
       setSearchType("user");
+    } else if (innerHTML === "시간별") {
+      setSearchType("time");
     }
   };
 
@@ -109,6 +112,28 @@ const FlagSearch = ({ userObj, authority }) => {
       });
   };
 
+  const getTimeList = () => {
+    setFlags([]);
+    const today = new Date();
+    const hours = today.getHours();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    let flagFormmat = month + "월" + day + "일";
+    console.log(flagFormmat);
+  };
+
+  const getMonthDay = (flag) => {
+    const flagDay = new Date(flag.createdAt);
+    const month = flagDay.getMonth() + 1;
+    const day = flagDay.getDate();
+    let flagFormmat = month + "월" + day + "일";
+    if (lastMonthDay === flagFormmat) {
+    } else {
+      lastMonthDay = flagFormmat;
+      return flagFormmat;
+    }
+  };
+
   useEffect(() => {
     checkAuthority();
   }, [checkAuthority]);
@@ -118,6 +143,8 @@ const FlagSearch = ({ userObj, authority }) => {
       searchAll();
     } else if (searchType === "user") {
       getUserList();
+    } else if (searchType === "time") {
+      getTimeList();
     }
   }, [searchType]);
 
@@ -152,11 +179,16 @@ const FlagSearch = ({ userObj, authority }) => {
         ))}
         {selectedUser && <div className="selectedUser">{selectedUser}</div>}
         {flags.map((flag) => (
-          <Flag
-            key={flag.id}
-            flagObj={flag}
-            isOwner={flag.creatorId === userObj.uid}
-          />
+          <>
+            {getMonthDay(flag) && (
+              <div className="flag_month_day">{lastMonthDay}</div>
+            )}
+            <Flag
+              key={flag.id}
+              flagObj={flag}
+              isOwner={flag.creatorId === userObj.uid}
+            />
+          </>
         ))}
       </div>
     </div>

@@ -1,6 +1,14 @@
 .flag_box {
   display: flex;
   align-items: center;
+  padding-bottom: 10px;
+}
+
+.flag_month_day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
 }
 
 .fb_time {

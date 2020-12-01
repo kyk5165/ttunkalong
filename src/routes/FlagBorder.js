@@ -9,6 +9,7 @@ const FlagBorder = ({ userObj }) => {
   const [flagViewTime, setFlagViewTime] = useState("");
   const [state, setState] = useState("업로드대기");
   const [flags, setFlags] = useState([]);
+  let lastMonthDay = "";
 
   const onAttachmentChange = (event) => {
     const {
@@ -55,23 +56,33 @@ const FlagBorder = ({ userObj }) => {
     file.value = "";
   };
 
+  const getMonthDay = (flag) => {
+    const flagDay = new Date(flag.createdAt);
+    const month = flagDay.getMonth() + 1;
+    const day = flagDay.getDate();
+    let flagFormmat = month + "월" + day + "일";
+    if (lastMonthDay === flagFormmat) {
+    } else {
+      lastMonthDay = flagFormmat;
+      return flagFormmat;
+    }
+  };
+
   useEffect(() => {
     const today = new Date();
     const hours = today.getHours();
-    const month = today.getMonth() + 1;
-    const day = today.getDate();
-    let flagFormmat = month + "월" + day + "일";
-    if (hours >= 22 || hours < 12) {
-      setFlagViewTime("플래그 22시");
-      setFlagTime(flagFormmat + "22시");
+    if (hours >= 21) {
+      setFlagViewTime("플래그 9시");
+      setFlagTime("21시");
     } else if (hours >= 19) {
       setFlagViewTime("플래그 7시");
-      setFlagTime(flagFormmat + "19시");
+      setFlagTime("19시");
     } else if (hours >= 12) {
       setFlagViewTime("플래그 12시");
-      setFlagTime(flagFormmat + "12시");
+      setFlagTime("12시");
     } else {
-      setFlagViewTime("플래그 시간오류");
+      document.getElementById("upload_img_btn").disabled = true;
+      setFlagViewTime("날짜가 변경되어 업로드를 중단합니다.");
       setFlagTime("flagNoTime");
     }
 
@@ -115,13 +126,20 @@ const FlagBorder = ({ userObj }) => {
         )}
       </form>
       <h4>{state}</h4>
-      {flags.map((flag) => (
-        <Flag
-          key={flag.id}
-          flagObj={flag}
-          isOwner={flag.creatorId === userObj.uid}
-        />
-      ))}
+      <div>
+        {flags.map((flag) => (
+          <>
+            {getMonthDay(flag) && (
+              <div className="flag_month_day">{lastMonthDay}</div>
+            )}
+            <Flag
+              key={flag.id}
+              flagObj={flag}
+              isOwner={flag.creatorId === userObj.uid}
+            />
+          </>
+        ))}
+      </div>
     </>
   );
 };
